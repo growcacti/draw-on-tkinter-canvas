@@ -2,16 +2,16 @@ import tkinter as tk
 import tkinter.ttk as ttk
 
 root = tk.Tk()
-root.title("Drawing App")
+root.title("JH Drawing App")
 
 def drawapp():
         
-        xold = None
-        yold = None
+        dx = None
+        dy = None
         canvas = None
         color = "Black"
         thickness = 1
-        tag = ["tag", "0"] #Don't know why but tags can't be just a number
+        tag = ["tag", "0"]
         background = "white"
        
         
@@ -38,25 +38,25 @@ def drawapp():
                 canvas.delete("all")
 
         def on_up(event):
-                nonlocal xold, yold
-                xold = None
-                yold = None
+                nonlocal dx, dy
+                dx = None
+                dy = None
           
 
-        def on_motion(event, *args, **kwargs):
-                nonlocal xold, yold
+        def on_motion(event):
+                nonlocal dx, dy
                 color = colorlist.get()
            
                 thickness = int(cb.get())
                 x1, y1 = (event.x - thickness), (event.y - thickness)
                 x2, y2 = (event.x + thickness), (event.y + thickness)
                 event.widget.create_oval(x1, y1, x2, y2, width=0, fill=color, tag=tag)
-                if xold is not None and yold is not None:
+                if dx is not None and dy is not None:
                         canvas.create_oval(x1, y1, x2, y2, width=0, fill=color, tag=tag)
-                        canvas.create_line(xold, yold, event.x, event.y, smooth=True, width=2*thickness, fill=color, tag=tag)
+                        canvas.create_line(dx, dy, event.x, event.y, smooth=True, width=2*thickness, fill=color, tag=tag)
         # here's where you draw it. smooth. neat.
-                xold = event.x
-                yold = event.y         
+                dx = event.x
+                dy = event.y         
                     
                     
 
